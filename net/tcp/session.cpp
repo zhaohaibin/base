@@ -13,6 +13,8 @@ session::session(tcp::socket socket, session_handler* p_session_handler)
 session::~session()
 {
 	delete[]m_buffer;
+	if (m_psession_handler != nullptr)
+		delete m_psession_handler;
 	cout << "session destroy" << endl;
 }
 
@@ -73,8 +75,10 @@ void session::do_read()
 		}
 		else
 		{
-			m_psession_handler->read_error_handler(ec);
-			m_psession_handler = nullptr;
+			if (m_psession_handler)
+			{
+				m_psession_handler->read_error_handler(ec);
+			}
 		}
 	});
 }
@@ -97,8 +101,8 @@ void session::do_write()
 			}
 			else
 			{
-				m_psession_handler->write_error_handler(ec, m_write_buffer._buffer);
-				m_psession_handler = nullptr;
+				if (m_psession_handler)
+					m_psession_handler->write_error_handler(ec, m_write_buffer._buffer);
 			}
 		});
 	}
