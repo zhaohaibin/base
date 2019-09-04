@@ -2,9 +2,15 @@
 
 timer::timer_impl::timer_impl()
 	: m_timer(m_io_service)
-	, m_work(m_io_service)
+	, m_p_work(new boost::asio::io_service::work(m_io_service))
 {
 	m_thread = boost::thread(boost::bind(&timer::timer_impl::work_thread, this));
+}
+
+timer::timer_impl::~timer_impl()
+{
+	delete m_p_work;
+	m_io_service.stop();
 }
 
 void timer::timer_impl::work_thread()
