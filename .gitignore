@@ -1,0 +1,15 @@
+/third_party/RCF-3.1.328/demo/vs2015/RcfDll/x64/Release/RcfDll.tlog/*.tlog
+*.tlog
+*.pdb
+*.obj
+*.log
+*.db
+*.dll
+*.exe
+*.lib
+*.opendb
+*.ilk
+*.exp
+*.filters
+*.suo
+*.idb
